@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="AI-powered semantic product discovery and personalized recommendations"
+    >
+
+    <title>AI Shop — Intelligent Product Discovery</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="background">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="grid-background"></div>
+</div>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="#" class="logo">
+
+            <div class="logo-icon">
+                ✦
+            </div>
+
+            <div>
+                <strong>AI Shop</strong>
+                <span>Intelligent Commerce</span>
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a href="#search-section">
+                Discover
+            </a>
+
+            <a href="#recommendations-section">
+                Recommendations
+            </a>
+
+            <a href="#technology">
+                Technology
+            </a>
+
+        </nav>
+
+
+        <div class="nav-right">
+
+            <div class="online-status">
+                <span></span>
+                AI Online
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero" id="search-section">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            <span>✦</span>
+            AI-POWERED PRODUCT DISCOVERY
+        </div>
+
+
+        <h1>
+            Find products
+            <span>that understand you.</span>
+        </h1>
+
+
+        <p class="hero-text">
+            Search naturally. Describe what you need in your own words
+            and let AI discover the most relevant products for you.
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <span class="search-icon">
+                🔍
+            </span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Try: wireless headphones for gaming under ₹5000"
+                autocomplete="off"
+            >
+
+            <button
+                id="searchButton"
+                class="primary-button"
+            >
+                Search
+                <span>→</span>
+            </button>
+
+        </div>
+
+
+        <!-- SUGGESTIONS -->
+
+        <div class="suggestions">
+
+            <span>Popular:</span>
+
+            <button
+                class="suggestion"
+                data-query="wireless headphones for gaming"
+            >
+                🎧 Gaming Audio
+            </button>
+
+            <button
+                class="suggestion"
+                data-query="laptop for programming under 60000"
+            >
+                💻 Programming Laptop
+            </button>
+
+            <button
+                class="suggestion"
+                data-query="running shoes for men"
+            >
+                👟 Running Shoes
+            </button>
+
+            <button
+                class="suggestion"
+                data-query="smartphone with good camera"
+            >
+                📱 Smartphones
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main-container">
+
+
+    <!-- SEARCH STATUS -->
+
+    <div id="searchStatus" class="status-message"></div>
+
+
+    <!-- =================================================
+         AI UNDERSTANDING
+    ================================================== -->
+
+    <section
+        id="interpretationSection"
+        class="ai-understanding hidden"
+    >
+
+        <div class="section-heading-small">
+            <span>✦</span>
+            AI QUERY UNDERSTANDING
+        </div>
+
+
+        <div class="ai-panel">
+
+            <div class="ai-icon">
+                ✦
+            </div>
+
+            <div class="ai-content">
+
+                <div class="ai-title-row">
+
+                    <h3>
+                        Here's what I understood
+                    </h3>
+
+                    <span class="ai-badge">
+                        Gemini AI
+                    </span>
+
+                </div>
+
+                <p id="interpretation">
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         CATEGORIES
+    ================================================== -->
+
+    <section class="categories-section">
+
+        <div class="section-header">
+
+            <div>
+                <span class="section-label">
+                    EXPLORE
+                </span>
+
+                <h2>
+                    Shop by category
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="category-grid">
+
+            <button
+                class="category-card"
+                data-query="laptops for programming"
+            >
+                <div class="category-icon laptop">
+                    💻
+                </div>
+
+                <div>
+                    <strong>Laptops</strong>
+                    <span>Work & Gaming</span>
+                </div>
+
+                <b>→</b>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-query="wireless headphones"
+            >
+                <div class="category-icon audio">
+                    🎧
+                </div>
+
+                <div>
+                    <strong>Audio</strong>
+                    <span>Headphones & More</span>
+                </div>
+
+                <b>→</b>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-query="running shoes for men"
+            >
+                <div class="category-icon fashion">
+                    👟
+                </div>
+
+                <div>
+                    <strong>Footwear</strong>
+                    <span>Sports & Lifestyle</span>
+                </div>
+
+                <b>→</b>
+            </button>
+
+
+            <button
+                class="category-card"
+                data-query="smartphones with good camera"
+            >
+                <div class="category-icon phone">
+                    📱
+                </div>
+
+                <div>
+                    <strong>Smartphones</strong>
+                    <span>Latest Technology</span>
+                </div>
+
+                <b>→</b>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SEARCH RESULTS
+    ================================================== -->
+
+    <section class="results-section">
+
+        <div class="results-header">
+
+            <div>
+
+                <span class="section-label">
+                    SEARCH RESULTS
+                </span>
+
+                <h2>
+                    Products matching your intent
+                </h2>
+
+            </div>
+
+
+            <div class="result-controls">
+
+                <span id="resultCount">
+                </span>
+
+                <select id="sortSelect">
+
+                    <option value="relevance">
+                        Relevance
+                    </option>
+
+                    <option value="rating">
+                        Highest Rated
+                    </option>
+
+                    <option value="price-low">
+                        Price: Low to High
+                    </option>
+
+                    <option value="price-high">
+                        Price: High to Low
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- FILTERS -->
+
+        <div class="filters">
+
+            <button
+                class="filter active"
+                data-filter="all"
+            >
+                All
+            </button>
+
+            <button
+                class="filter"
+                data-filter="budget"
+            >
+                Under ₹5K
+            </button>
+
+            <button
+                class="filter"
+                data-filter="rating"
+            >
+                ⭐ 4+
+            </button>
+
+        </div>
+
+
+        <div
+            id="results"
+            class="product-grid"
+        >
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ✦
+                </div>
+
+                <h3>
+                    Start discovering
+                </h3>
+
+                <p>
+                    Search naturally and AI will find products
+                    that match your intent.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         RECOMMENDATIONS
+    ================================================== -->
+
+    <section
+        id="recommendations-section"
+        class="recommendations-section"
+    >
+
+        <div class="recommendation-top">
+
+            <div>
+
+                <span class="section-label">
+                    PERSONALIZED FOR YOU
+                </span>
+
+                <h2>
+                    Recommendations
+                </h2>
+
+                <p>
+                    Discover products based on your interaction history.
+                </p>
+
+            </div>
+
+
+            <div class="heart-icon">
+                ♡
+            </div>
+
+        </div>
+
+
+        <div class="user-search">
+
+            <div class="user-input">
+
+                <span>
+                    👤
+                </span>
+
+                <input
+                    type="text"
+                    id="userId"
+                    placeholder="Enter User ID, e.g. U001"
+                >
+
+            </div>
+
+
+            <button
+                id="recommendationButton"
+                class="secondary-button"
+            >
+                Get Recommendations
+                <span>→</span>
+            </button>
+
+        </div>
+
+
+        <div
+            id="recommendationStatus"
+            class="status-message"
+        ></div>
+
+
+        <div
+            id="recommendations"
+            class="product-grid"
+        ></div>
+
+    </section>
+
+
+    <!-- =================================================
+         WHY AI SHOP
+    ================================================== -->
+
+    <section
+        id="technology"
+        class="technology-section"
+    >
+
+        <div class="technology-heading">
+
+            <span class="section-label">
+                POWERED BY AI
+            </span>
+
+            <h2>
+                Shopping, reimagined.
+            </h2>
+
+            <p>
+                Multiple intelligent technologies work together
+                to understand intent and discover relevant products.
+            </p>
+
+        </div>
+
+
+        <div class="technology-grid">
+
+            <div class="technology-card">
+
+                <div class="tech-icon">
+                    ✦
+                </div>
+
+                <h3>
+                    Gemini AI
+                </h3>
+
+                <p>
+                    Understands natural-language queries,
+                    preferences and shopping intent.
+                </p>
+
+            </div>
+
+
+            <div class="technology-card">
+
+                <div class="tech-icon">
+                    ◎
+                </div>
+
+                <h3>
+                    Semantic Search
+                </h3>
+
+                <p>
+                    Sentence Transformers convert text into
+                    semantic embeddings for intelligent retrieval.
+                </p>
+
+            </div>
+
+
+            <div class="technology-card">
+
+                <div class="tech-icon">
+                    ◈
+                </div>
+
+                <h3>
+                    FAISS
+                </h3>
+
+                <p>
+                    Performs fast vector similarity search
+                    across thousands of products.
+                </p>
+
+            </div>
+
+
+            <div class="technology-card">
+
+                <div class="tech-icon">
+                    ♡
+                </div>
+
+                <h3>
+                    Personalization
+                </h3>
+
+                <p>
+                    User interactions are used to generate
+                    personalized product recommendations.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     PRODUCT MODAL
+===================================================== -->
+
+<div
+    id="productModal"
+    class="modal hidden"
+>
+
+    <div
+        class="modal-overlay"
+        id="modalOverlay"
+    ></div>
+
+
+    <div class="modal-content">
+
+        <button
+            id="closeModal"
+            class="close-modal"
+        >
+            ×
+        </button>
+
+
+        <div
+            id="modalBody"
+            class="modal-body"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <div class="logo-icon">
+                ✦
+            </div>
+
+            <div>
+
+                <strong>
+                    AI Shop
+                </strong>
+
+                <span>
+                    Intelligent Product Discovery
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-tech">
+            FastAPI • FAISS • Gemini • PostgreSQL
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
