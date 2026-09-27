@@ -1,0 +1,26 @@
+data/*.csv
+
+# Environment
+.env
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store
+
+# MLflow
+mlruns/
+
+# Logs
+*.log.venv/
+.env
+__pycache__/
+*.pyc
+.DS_Store
+
+embeddings/
+mlruns/
+.pytest_cache/

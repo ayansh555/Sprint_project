@@ -9,28 +9,12 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="description"
-        content="AI-powered semantic product discovery and personalized recommendations"
-    >
-
     <title>AI Shop — Intelligent Product Discovery</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
-<!-- =====================================================
-     BACKGROUND
-===================================================== -->
-
-<div class="background">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="grid-background"></div>
-</div>
-
 
 <!-- =====================================================
      NAVBAR
@@ -40,43 +24,40 @@
 
     <div class="nav-container">
 
-        <a href="#" class="logo">
+        <a href="#" class="brand">
 
-            <div class="logo-icon">
-                ✦
-            </div>
+            <span class="brand-mark">✦</span>
 
-            <div>
-                <strong>AI Shop</strong>
-                <span>Intelligent Commerce</span>
-            </div>
+            <span>
+                <strong>AI SHOP</strong>
+                <small>Intelligent commerce</small>
+            </span>
 
         </a>
 
 
         <nav class="nav-links">
 
-            <a href="#search-section">
+            <a href="#discover">
                 Discover
             </a>
 
-            <a href="#recommendations-section">
-                Recommendations
+            <a href="#categories">
+                Categories
             </a>
 
-            <a href="#technology">
-                Technology
+            <a href="#recommendations-section">
+                For You
             </a>
 
         </nav>
 
 
-        <div class="nav-right">
+        <div class="nav-status">
 
-            <div class="online-status">
-                <span></span>
-                AI Online
-            </div>
+            <span class="status-dot"></span>
+
+            AI Search Active
 
         </div>
 
@@ -85,50 +66,55 @@
 </header>
 
 
+
 <!-- =====================================================
      HERO
 ===================================================== -->
 
-<section class="hero" id="search-section">
+<main>
+
+<section class="hero" id="discover">
 
     <div class="hero-content">
 
         <div class="eyebrow">
-            <span>✦</span>
-            AI-POWERED PRODUCT DISCOVERY
+            INTELLIGENT PRODUCT DISCOVERY
         </div>
 
 
         <h1>
-            Find products
-            <span>that understand you.</span>
+            Find what
+            <span>fits you.</span>
         </h1>
 
 
-        <p class="hero-text">
-            Search naturally. Describe what you need in your own words
-            and let AI discover the most relevant products for you.
+        <p class="hero-description">
+
+            Search naturally. Our AI understands what you mean
+            and helps you discover products that actually match
+            your needs.
+
         </p>
 
 
         <!-- SEARCH -->
 
-        <div class="search-box">
+        <div class="search-wrapper">
 
-            <span class="search-icon">
-                🔍
-            </span>
+            <div class="search-icon">
+                ⌕
+            </div>
 
             <input
                 type="text"
                 id="searchInput"
-                placeholder="Try: wireless headphones for gaming under ₹5000"
+                placeholder="Try “comfortable wireless headphones under ₹5000”"
                 autocomplete="off"
             >
 
             <button
                 id="searchButton"
-                class="primary-button"
+                class="search-button"
             >
                 Search
                 <span>→</span>
@@ -141,53 +127,55 @@
 
         <div class="suggestions">
 
-            <span>Popular:</span>
+            <span>Try searching:</span>
 
             <button
                 class="suggestion"
-                data-query="wireless headphones for gaming"
+                data-query="wireless headphones under ₹5000"
             >
-                🎧 Gaming Audio
+                Wireless headphones
             </button>
 
             <button
                 class="suggestion"
-                data-query="laptop for programming under 60000"
+                data-query="gaming laptop"
             >
-                💻 Programming Laptop
+                Gaming laptop
             </button>
 
             <button
                 class="suggestion"
-                data-query="running shoes for men"
+                data-query="smart watch"
             >
-                👟 Running Shoes
+                Smart watch
             </button>
 
             <button
                 class="suggestion"
-                data-query="smartphone with good camera"
+                data-query="comfortable running shoes"
             >
-                📱 Smartphones
+                Running shoes
             </button>
 
         </div>
+
+
+        <div
+            id="searchStatus"
+            class="search-status"
+        ></div>
 
     </div>
 
 </section>
 
 
+
 <!-- =====================================================
-     MAIN
+     MAIN CONTENT
 ===================================================== -->
 
-<main class="main-container">
-
-
-    <!-- SEARCH STATUS -->
-
-    <div id="searchStatus" class="status-message"></div>
+<div class="main-container">
 
 
     <!-- =================================================
@@ -199,9 +187,9 @@
         class="ai-understanding hidden"
     >
 
-        <div class="section-heading-small">
+        <div class="ai-label">
             <span>✦</span>
-            AI QUERY UNDERSTANDING
+            AI UNDERSTOOD YOUR SEARCH
         </div>
 
 
@@ -213,17 +201,9 @@
 
             <div class="ai-content">
 
-                <div class="ai-title-row">
-
-                    <h3>
-                        Here's what I understood
-                    </h3>
-
-                    <span class="ai-badge">
-                        Gemini AI
-                    </span>
-
-                </div>
+                <h3>
+                    Here's what we're looking for
+                </h3>
 
                 <p id="interpretation">
                 </p>
@@ -235,94 +215,117 @@
     </section>
 
 
+
     <!-- =================================================
          CATEGORIES
     ================================================== -->
 
-    <section class="categories-section">
+    <section
+        id="categories"
+        class="categories-section"
+    >
 
-        <div class="section-header">
+        <div class="section-heading">
 
-            <div>
-                <span class="section-label">
-                    EXPLORE
-                </span>
-
-                <h2>
-                    Shop by category
-                </h2>
+            <div class="section-kicker">
+                EXPLORE
             </div>
+
+            <h2>
+                Shop by category
+            </h2>
+
+            <p>
+                Start with what you're looking for.
+            </p>
 
         </div>
 
 
         <div class="category-grid">
 
+
             <button
                 class="category-card"
-                data-query="laptops for programming"
+                data-query="laptops and computers"
             >
-                <div class="category-icon laptop">
+
+                <span class="category-icon">
                     💻
-                </div>
+                </span>
 
-                <div>
-                    <strong>Laptops</strong>
-                    <span>Work & Gaming</span>
-                </div>
+                <span>
+                    <strong>Computers</strong>
+                    <small>Laptops & accessories</small>
+                </span>
 
-                <b>→</b>
+                <span class="category-arrow">
+                    →
+                </span>
+
             </button>
 
 
             <button
                 class="category-card"
-                data-query="wireless headphones"
+                data-query="wireless headphones and earbuds"
             >
-                <div class="category-icon audio">
+
+                <span class="category-icon">
                     🎧
-                </div>
+                </span>
 
-                <div>
+                <span>
                     <strong>Audio</strong>
-                    <span>Headphones & More</span>
-                </div>
+                    <small>Headphones & earbuds</small>
+                </span>
 
-                <b>→</b>
+                <span class="category-arrow">
+                    →
+                </span>
+
             </button>
 
 
             <button
                 class="category-card"
-                data-query="running shoes for men"
+                data-query="smartphones and mobile phones"
             >
-                <div class="category-icon fashion">
-                    👟
-                </div>
 
-                <div>
-                    <strong>Footwear</strong>
-                    <span>Sports & Lifestyle</span>
-                </div>
-
-                <b>→</b>
-            </button>
-
-
-            <button
-                class="category-card"
-                data-query="smartphones with good camera"
-            >
-                <div class="category-icon phone">
+                <span class="category-icon">
                     📱
-                </div>
+                </span>
 
-                <div>
-                    <strong>Smartphones</strong>
-                    <span>Latest Technology</span>
-                </div>
+                <span>
+                    <strong>Mobiles</strong>
+                    <small>Phones & accessories</small>
+                </span>
 
-                <b>→</b>
+                <span class="category-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                class="category-card"
+                data-query="smart watches"
+            >
+
+                <span class="category-icon">
+                    ⌚
+                </span>
+
+                <span>
+                    <strong>Wearables</strong>
+                    <small>Smart watches & more</small>
+                </span>
+
+                <span class="category-arrow">
+                    →
+                </span>
+
             </button>
 
         </div>
@@ -330,31 +333,59 @@
     </section>
 
 
+
     <!-- =================================================
          SEARCH RESULTS
     ================================================== -->
 
-    <section class="results-section">
+    <section
+        id="search-results-section"
+        class="results-section"
+    >
 
         <div class="results-header">
 
             <div>
 
-                <span class="section-label">
-                    SEARCH RESULTS
-                </span>
+                <div class="section-kicker">
+                    DISCOVERY
+                </div>
 
                 <h2>
-                    Products matching your intent
+                    Products for you
                 </h2>
+
+                <span
+                    id="resultCount"
+                    class="result-count"
+                ></span>
 
             </div>
 
 
             <div class="result-controls">
 
-                <span id="resultCount">
-                </span>
+                <button
+                    class="filter active"
+                    data-filter="all"
+                >
+                    All
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="budget"
+                >
+                    Under ₹5K
+                </button>
+
+                <button
+                    class="filter"
+                    data-filter="rating"
+                >
+                    4★ & above
+                </button>
+
 
                 <select id="sortSelect">
 
@@ -363,15 +394,15 @@
                     </option>
 
                     <option value="rating">
-                        Highest Rated
+                        Highest rated
                     </option>
 
                     <option value="price-low">
-                        Price: Low to High
+                        Price: Low to high
                     </option>
 
                     <option value="price-high">
-                        Price: High to Low
+                        Price: High to low
                     </option>
 
                 </select>
@@ -381,52 +412,24 @@
         </div>
 
 
-        <!-- FILTERS -->
-
-        <div class="filters">
-
-            <button
-                class="filter active"
-                data-filter="all"
-            >
-                All
-            </button>
-
-            <button
-                class="filter"
-                data-filter="budget"
-            >
-                Under ₹5K
-            </button>
-
-            <button
-                class="filter"
-                data-filter="rating"
-            >
-                ⭐ 4+
-            </button>
-
-        </div>
-
-
         <div
             id="results"
             class="product-grid"
         >
 
-            <div class="empty-state">
+            <div class="initial-state">
 
-                <div class="empty-icon">
+                <div class="initial-icon">
                     ✦
                 </div>
 
                 <h3>
-                    Start discovering
+                    What are you looking for?
                 </h3>
 
                 <p>
-                    Search naturally and AI will find products
-                    that match your intent.
+                    Search naturally and let AI find
+                    products that match your intent.
                 </p>
 
             </div>
@@ -434,6 +437,7 @@
         </div>
 
     </section>
+
 
 
     <!-- =================================================
@@ -445,44 +449,42 @@
         class="recommendations-section"
     >
 
-        <div class="recommendation-top">
+        <div class="recommendation-heading">
 
             <div>
 
-                <span class="section-label">
-                    PERSONALIZED FOR YOU
-                </span>
+                <div class="section-kicker">
+                    PERSONALIZED
+                </div>
 
                 <h2>
-                    Recommendations
+                    Picked for you
                 </h2>
 
                 <p>
-                    Discover products based on your interaction history.
+                    Recommendations based on your
+                    shopping interactions.
                 </p>
 
             </div>
 
-
-            <div class="heart-icon">
+            <div class="recommendation-symbol">
                 ♡
             </div>
 
         </div>
 
 
-        <div class="user-search">
+        <div class="recommendation-search">
 
-            <div class="user-input">
+            <div class="user-field">
 
-                <span>
-                    👤
-                </span>
+                <span>👤</span>
 
                 <input
                     type="text"
                     id="userId"
-                    placeholder="Enter User ID, e.g. U001"
+                    placeholder="Enter User ID e.g. user_001"
                 >
 
             </div>
@@ -490,10 +492,10 @@
 
             <button
                 id="recommendationButton"
-                class="secondary-button"
+                class="recommend-button"
             >
-                Get Recommendations
-                <span>→</span>
+                Get recommendations
+                →
             </button>
 
         </div>
@@ -501,115 +503,99 @@
 
         <div
             id="recommendationStatus"
-            class="status-message"
+            class="recommendation-status"
         ></div>
 
 
         <div
             id="recommendations"
-            class="product-grid"
+            class="product-grid recommendation-grid"
         ></div>
 
     </section>
 
 
+
     <!-- =================================================
-         WHY AI SHOP
+         TECHNOLOGY
     ================================================== -->
 
-    <section
-        id="technology"
-        class="technology-section"
-    >
+    <section class="technology-section">
 
-        <div class="technology-heading">
+        <div class="technology-content">
 
-            <span class="section-label">
-                POWERED BY AI
-            </span>
+            <div class="section-kicker">
+                BEHIND THE EXPERIENCE
+            </div>
 
             <h2>
-                Shopping, reimagined.
+                Search powered by intelligence.
             </h2>
 
             <p>
-                Multiple intelligent technologies work together
-                to understand intent and discover relevant products.
+                The platform combines semantic embeddings,
+                vector search, AI query understanding and
+                behavioral recommendations to make product
+                discovery more relevant.
             </p>
 
         </div>
 
 
-        <div class="technology-grid">
+        <div class="technology-list">
 
-            <div class="technology-card">
+            <div class="technology-item">
 
-                <div class="tech-icon">
-                    ✦
+                <span>01</span>
+
+                <div>
+                    <strong>Gemini AI</strong>
+                    <small>
+                        Understands natural-language intent
+                    </small>
                 </div>
-
-                <h3>
-                    Gemini AI
-                </h3>
-
-                <p>
-                    Understands natural-language queries,
-                    preferences and shopping intent.
-                </p>
 
             </div>
 
 
-            <div class="technology-card">
+            <div class="technology-item">
 
-                <div class="tech-icon">
-                    ◎
+                <span>02</span>
+
+                <div>
+                    <strong>Semantic Search</strong>
+                    <small>
+                        Finds products by meaning, not keywords
+                    </small>
                 </div>
-
-                <h3>
-                    Semantic Search
-                </h3>
-
-                <p>
-                    Sentence Transformers convert text into
-                    semantic embeddings for intelligent retrieval.
-                </p>
 
             </div>
 
 
-            <div class="technology-card">
+            <div class="technology-item">
 
-                <div class="tech-icon">
-                    ◈
+                <span>03</span>
+
+                <div>
+                    <strong>FAISS</strong>
+                    <small>
+                        Fast vector similarity retrieval
+                    </small>
                 </div>
-
-                <h3>
-                    FAISS
-                </h3>
-
-                <p>
-                    Performs fast vector similarity search
-                    across thousands of products.
-                </p>
 
             </div>
 
 
-            <div class="technology-card">
+            <div class="technology-item">
 
-                <div class="tech-icon">
-                    ♡
+                <span>04</span>
+
+                <div>
+                    <strong>Personalization</strong>
+                    <small>
+                        Recommendations from user interactions
+                    </small>
                 </div>
-
-                <h3>
-                    Personalization
-                </h3>
-
-                <p>
-                    User interactions are used to generate
-                    personalized product recommendations.
-                </p>
 
             </div>
 
@@ -617,7 +603,10 @@
 
     </section>
 
+</div>
+
 </main>
+
 
 
 <!-- =====================================================
@@ -630,8 +619,8 @@
 >
 
     <div
-        class="modal-overlay"
         id="modalOverlay"
+        class="modal-overlay"
     ></div>
 
 
@@ -640,19 +629,19 @@
         <button
             id="closeModal"
             class="close-modal"
+            type="button"
         >
             ×
         </button>
 
 
-        <div
-            id="modalBody"
-            class="modal-body"
-        ></div>
+        <div id="modalBody">
+        </div>
 
     </div>
 
 </div>
+
 
 
 <!-- =====================================================
@@ -663,29 +652,21 @@
 
     <div class="footer-container">
 
-        <div class="footer-brand">
+        <div>
 
-            <div class="logo-icon">
-                ✦
+            <div class="footer-brand">
+                ✦ AI SHOP
             </div>
 
-            <div>
-
-                <strong>
-                    AI Shop
-                </strong>
-
-                <span>
-                    Intelligent Product Discovery
-                </span>
-
-            </div>
+            <p>
+                Intelligent product discovery.
+            </p>
 
         </div>
 
 
         <div class="footer-tech">
-            FastAPI • FAISS • Gemini • PostgreSQL
+            FastAPI · Gemini · FAISS · PostgreSQL
         </div>
 
     </div>
@@ -696,4 +677,5 @@
 <script src="script.js"></script>
 
 </body>
+
 </html>

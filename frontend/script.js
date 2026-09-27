@@ -1,21 +1,9 @@
 const API_URL = "http://127.0.0.1:8000";
 
-
-// =========================================================
-// ELEMENTS
-// =========================================================
-
-const searchInput =
-    document.getElementById("searchInput");
-
-const searchButton =
-    document.getElementById("searchButton");
-
-const resultsContainer =
-    document.getElementById("results");
-
-const searchStatus =
-    document.getElementById("searchStatus");
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
+const resultsContainer = document.getElementById("results");
+const searchStatus = document.getElementById("searchStatus");
 
 const interpretationSection =
     document.getElementById("interpretationSection");
@@ -53,65 +41,64 @@ const closeModal =
 const modalOverlay =
     document.getElementById("modalOverlay");
 
-
-// =========================================================
-// GLOBAL DATA
-// =========================================================
-
 let currentResults = [];
 
 
-// =========================================================
-// SEARCH
-// =========================================================
+/* =========================================================
+   SEARCH
+========================================================= */
 
 async function searchProducts(query) {
 
     query = query.trim();
 
     if (!query) {
+
+        searchStatus.textContent =
+            "Please enter something to search.";
+
         searchInput.focus();
+
         return;
     }
 
 
     searchStatus.textContent =
-        "✦ AI is understanding your request...";
+        "✦ Understanding your request...";
 
 
     resultsContainer.innerHTML = `
         <div class="loading">
-
             <div class="spinner"></div>
-
             Finding products that match your intent...
-
         </div>
     `;
 
 
-    interpretationSection.classList.add("hidden");
-
-    resultCount.textContent = "";
+    interpretationSection.classList.add(
+        "hidden"
+    );
 
 
     try {
 
-        const response = await fetch(
-            `${API_URL}/search/`,
-            {
-                method: "POST",
+        const response =
+            await fetch(
+                `${API_URL}/search/`,
+                {
+                    method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                body: JSON.stringify({
-                    query: query,
-                    top_k: 8
-                })
-            }
-        );
+                    body: JSON.stringify({
+                        query: query,
+                        top_k: 8
+                    })
+                }
+            );
 
 
         if (!response.ok) {
@@ -131,8 +118,6 @@ async function searchProducts(query) {
             data
         );
 
-
-        // AI interpretation
 
         if (data.interpreted_query) {
 
@@ -154,7 +139,18 @@ async function searchProducts(query) {
         );
 
 
-        searchStatus.textContent = "";
+        searchStatus.textContent =
+            "";
+        
+
+        document
+            .getElementById(
+                "search-results-section"
+            )
+            ?.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
 
     } catch (error) {
@@ -178,11 +174,14 @@ async function searchProducts(query) {
                 </h3>
 
                 <p>
-                    Make sure FastAPI is running on port 8000.
+                    Make sure FastAPI is running on
+                    port 8000.
                 </p>
 
                 <small>
-                    ${escapeHtml(error.message)}
+                    ${escapeHtml(
+                        error.message
+                    )}
                 </small>
 
             </div>
@@ -191,9 +190,9 @@ async function searchProducts(query) {
 }
 
 
-// =========================================================
-// DISPLAY PRODUCTS
-// =========================================================
+/* =========================================================
+   DISPLAY PRODUCTS
+========================================================= */
 
 function displayProducts(products) {
 
@@ -216,7 +215,8 @@ function displayProducts(products) {
                 </h3>
 
                 <p>
-                    Try describing what you are looking for differently.
+                    Try describing what you need
+                    in a different way.
                 </p>
 
             </div>
@@ -246,31 +246,21 @@ function displayProducts(products) {
 }
 
 
-// =========================================================
-// PRODUCT CARD
-// =========================================================
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
 
 function createProductCard(
     product,
     index
 ) {
 
-    const category =
-        product.category ||
-        "Product";
-
-
-    const emoji =
-        getProductEmoji(category);
+    const image =
+        createProductImage(product);
 
 
     const price =
-        product.price !== null &&
-        product.price !== undefined
-            ? `₹${Number(
-                product.price
-            ).toLocaleString("en-IN")}`
-            : "Price unavailable";
+        formatPrice(product);
 
 
     const rating =
@@ -282,27 +272,20 @@ function createProductCard(
             : "No rating";
 
 
-    let similarity = "";
-
-
-    if (
-        product.similarity_score !==
-            undefined &&
+    const similarity =
+        product.similarity_score !== undefined &&
         product.similarity_score !== null
-    ) {
-
-        similarity = `
-
-            <span class="match-badge">
-
-                Semantic match:
-                ${Number(
-                    product.similarity_score
-                ).toFixed(3)}
-
-            </span>
-        `;
-    }
+            ? `
+                <span class="match-badge">
+                    AI MATCH
+                    ${Math.round(
+                        Number(
+                            product.similarity_score
+                        ) * 100
+                    )}%
+                </span>
+            `
+            : "";
 
 
     return `
@@ -314,12 +297,11 @@ function createProductCard(
 
             <div class="product-visual">
 
-                <div class="product-emoji">
-                    ${emoji}
-                </div>
+                ${image}
 
                 <button
                     class="wishlist"
+                    type="button"
                     title="Add to wishlist"
                 >
                     ♡
@@ -331,15 +313,19 @@ function createProductCard(
             <div class="product-info">
 
                 <div class="product-category">
-                    ${escapeHtml(category)}
+
+                    ${escapeHtml(
+                        product.category ||
+                        "Product"
+                    )}
+
                 </div>
 
 
                 <div class="product-name">
 
-                    ${escapeHtml(
-                        product.product_name ||
-                        "Unnamed Product"
+                    ${createProductName(
+                        product
                     )}
 
                 </div>
@@ -349,7 +335,7 @@ function createProductCard(
 
                     ${escapeHtml(
                         product.brand ||
-                        "Unknown Brand"
+                        "Unknown brand"
                     )}
 
                 </div>
@@ -358,11 +344,15 @@ function createProductCard(
                 <div class="product-bottom">
 
                     <span class="product-price">
+
                         ${price}
+
                     </span>
 
                     <span class="product-rating">
+
                         ${rating}
+
                     </span>
 
                 </div>
@@ -371,12 +361,22 @@ function createProductCard(
                 ${similarity}
 
 
-                <button
-                    class="view-product"
-                    data-index="${index}"
-                >
-                    View Product →
-                </button>
+                <div class="product-actions">
+
+                    <button
+                        class="view-product"
+                        data-index="${index}"
+                        type="button"
+                    >
+                        View Product
+                    </button>
+
+
+                    ${createPrimaryBuyButton(
+                        product
+                    )}
+
+                </div>
 
             </div>
 
@@ -385,14 +385,215 @@ function createProductCard(
 }
 
 
-// =========================================================
-// PRODUCT EVENTS
-// =========================================================
+/* =========================================================
+   IMAGE
+========================================================= */
+
+function createProductImage(product) {
+
+    if (!product.image_url) {
+
+        return `
+            <div class="product-image-placeholder">
+
+                <span>
+                    ${getProductEmoji(
+                        product.category
+                    )}
+                </span>
+
+                <small>
+                    Image unavailable
+                </small>
+
+            </div>
+        `;
+    }
+
+
+    const image = `
+
+        <img
+            src="${escapeAttribute(
+                product.image_url
+            )}"
+            alt="${escapeAttribute(
+                product.product_name ||
+                "Product"
+            )}"
+            class="product-real-image"
+            loading="lazy"
+            onerror="handleImageError(this)"
+        >
+    `;
+
+
+    const url =
+        getMainProductURL(product);
+
+
+    if (!url) {
+
+        return image;
+    }
+
+
+    return `
+
+        <a
+            href="${escapeAttribute(url)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="product-image-link"
+        >
+
+            ${image}
+
+        </a>
+    `;
+}
+
+
+/* =========================================================
+   PRODUCT NAME
+========================================================= */
+
+function createProductName(product) {
+
+    const name =
+        product.product_name ||
+        "Unnamed Product";
+
+
+    const url =
+        getMainProductURL(product);
+
+
+    if (!url) {
+
+        return escapeHtml(name);
+    }
+
+
+    return `
+        <a
+            href="${escapeAttribute(url)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="product-name-link"
+        >
+            ${escapeHtml(name)}
+        </a>
+    `;
+}
+
+
+/* =========================================================
+   IMAGE ERROR
+========================================================= */
+
+function handleImageError(image) {
+
+    image.style.display =
+        "none";
+
+
+    const parent =
+        image.parentElement;
+
+
+    if (!parent) return;
+
+
+    parent.innerHTML = `
+
+        <div class="product-image-placeholder">
+
+            <span>
+                🛍️
+            </span>
+
+            <small>
+                Image unavailable
+            </small>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   URL
+========================================================= */
+
+function getMainProductURL(product) {
+
+    return (
+        product.product_url ||
+        product.amazon_url ||
+        product.flipkart_url ||
+        product.croma_url ||
+        product.reliance_url ||
+        product.official_url ||
+        null
+    );
+}
+
+
+/* =========================================================
+   BUY BUTTON
+========================================================= */
+
+function createPrimaryBuyButton(product) {
+
+    if (product.amazon_url) {
+
+        return `
+            <a
+                href="${escapeAttribute(
+                    product.amazon_url
+                )}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="buy-button"
+            >
+                Amazon →
+            </a>
+        `;
+    }
+
+
+    if (product.product_url) {
+
+        return `
+            <a
+                href="${escapeAttribute(
+                    product.product_url
+                )}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="buy-button"
+            >
+                Buy →
+            </a>
+        `;
+    }
+
+
+    return "";
+}
+
+
+/* =========================================================
+   PRODUCT EVENTS
+========================================================= */
 
 function attachProductEvents() {
 
     document
-        .querySelectorAll(".view-product")
+        .querySelectorAll(
+            ".view-product"
+        )
         .forEach(button => {
 
             button.addEventListener(
@@ -404,6 +605,7 @@ function attachProductEvents() {
                             button.dataset.index
                         );
 
+
                     openProductModal(
                         currentResults[index]
                     );
@@ -413,7 +615,9 @@ function attachProductEvents() {
 
 
     document
-        .querySelectorAll(".wishlist")
+        .querySelectorAll(
+            ".wishlist"
+        )
         .forEach(button => {
 
             button.addEventListener(
@@ -422,8 +626,16 @@ function attachProductEvents() {
 
                     event.stopPropagation();
 
+
+                    button.classList.toggle(
+                        "active"
+                    );
+
+
                     button.textContent =
-                        button.textContent === "♡"
+                        button.classList.contains(
+                            "active"
+                        )
                             ? "♥"
                             : "♡";
                 }
@@ -432,33 +644,17 @@ function attachProductEvents() {
 }
 
 
-// =========================================================
-// PRODUCT MODAL
-// =========================================================
+/* =========================================================
+   MODAL
+========================================================= */
 
 function openProductModal(product) {
 
-    if (!product) {
-        return;
-    }
-
-
-    const category =
-        product.category ||
-        "Product";
-
-
-    const emoji =
-        getProductEmoji(category);
+    if (!product) return;
 
 
     const price =
-        product.price !== null &&
-        product.price !== undefined
-            ? `₹${Number(
-                product.price
-            ).toLocaleString("en-IN")}`
-            : "Price unavailable";
+        formatPrice(product);
 
 
     const rating =
@@ -470,121 +666,123 @@ function openProductModal(product) {
             : "No rating";
 
 
+    const image =
+        product.image_url
+
+            ? `
+                <img
+                    src="${escapeAttribute(
+                        product.image_url
+                    )}"
+                    alt="${escapeAttribute(
+                        product.product_name
+                    )}"
+                    class="modal-product-image"
+                >
+            `
+
+            : `
+                <div class="modal-image-placeholder">
+
+                    <span>
+                        ${getProductEmoji(
+                            product.category
+                        )}
+                    </span>
+
+                    <small>
+                        Image unavailable
+                    </small>
+
+                </div>
+            `;
+
+
     modalBody.innerHTML = `
 
-        <div
-            style="
-                display:grid;
-                grid-template-columns:180px 1fr;
-                gap:30px;
-                align-items:center;
-            "
-        >
+        <div class="modal-product">
 
-            <div
-                style="
-                    height:180px;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    border-radius:18px;
-                    background:
-                        radial-gradient(
-                            circle,
-                            rgba(110,80,255,.18),
-                            transparent 70%
-                        );
-                    font-size:75px;
-                "
-            >
-                ${emoji}
+            <div class="modal-product-image-container">
+
+                ${image}
+
             </div>
 
 
-            <div>
+            <div class="modal-product-details">
 
-                <div
-                    style="
-                        color:#a28cff;
-                        font-size:10px;
-                        font-weight:800;
-                        letter-spacing:1.5px;
-                        text-transform:uppercase;
-                    "
-                >
-                    ${escapeHtml(category)}
+                <div class="modal-category">
+
+                    ${escapeHtml(
+                        product.category ||
+                        "Product"
+                    )}
+
                 </div>
 
 
-                <h2
-                    style="
-                        margin-top:8px;
-                        font-size:26px;
-                    "
-                >
+                <h2>
+
                     ${escapeHtml(
                         product.product_name ||
                         "Product"
                     )}
+
                 </h2>
 
 
-                <p
-                    style="
-                        color:#7f879b;
-                        margin-top:7px;
-                    "
-                >
+                <p class="modal-brand">
+
                     ${escapeHtml(
                         product.brand ||
-                        "Unknown Brand"
+                        "Unknown brand"
                     )}
+
                 </p>
 
 
-                <div
-                    style="
-                        display:flex;
-                        gap:20px;
-                        margin-top:20px;
-                    "
-                >
+                <div class="modal-price-rating">
 
-                    <strong
-                        style="
-                            font-size:22px;
-                        "
-                    >
+                    <strong>
                         ${price}
                     </strong>
 
-                    <span
-                        style="
-                            color:#ffc95c;
-                            padding-top:5px;
-                        "
-                    >
+                    <span>
                         ${rating}
                     </span>
 
                 </div>
 
 
+                <p class="modal-description">
+
+                    ${escapeHtml(
+                        product.description ||
+                        "No description available."
+                    )}
+
+                </p>
+
+
+                <div class="modal-retailers">
+
+                    <h3>
+                        Available from
+                    </h3>
+
+                    <div class="retailer-buttons">
+
+                        ${createRetailerButtons(
+                            product
+                        )}
+
+                    </div>
+
+                </div>
+
+
                 <button
-                    style="
-                        margin-top:25px;
-                        padding:12px 20px;
-                        border:none;
-                        border-radius:10px;
-                        background:linear-gradient(
-                            135deg,
-                            #8060ff,
-                            #6544e8
-                        );
-                        color:white;
-                        font-weight:700;
-                        cursor:pointer;
-                    "
+                    class="modal-close-button"
                     onclick="closeProductModal()"
                 >
                     Close
@@ -602,29 +800,125 @@ function openProductModal(product) {
 }
 
 
-function closeProductModal() {
+/* =========================================================
+   RETAILERS
+========================================================= */
 
-    productModal.classList.add(
-        "hidden"
+function createRetailerButtons(product) {
+
+    const buttons = [];
+
+
+    const retailers = [
+        [
+            "amazon_url",
+            "Amazon →"
+        ],
+        [
+            "flipkart_url",
+            "Flipkart →"
+        ],
+        [
+            "croma_url",
+            "Croma →"
+        ],
+        [
+            "reliance_url",
+            "Reliance →"
+        ],
+        [
+            "official_url",
+            "Official Website →"
+        ]
+    ];
+
+
+    retailers.forEach(
+        ([key, label]) => {
+
+            if (product[key]) {
+
+                buttons.push(`
+
+                    <a
+                        href="${escapeAttribute(
+                            product[key]
+                        )}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="retailer-button"
+                    >
+                        ${label}
+                    </a>
+
+                `);
+            }
+        }
     );
+
+
+    if (!buttons.length) {
+
+        return `
+            <span class="no-retailer">
+                No verified purchase link available.
+            </span>
+        `;
+    }
+
+
+    return buttons.join("");
 }
 
 
-closeModal.addEventListener(
-    "click",
-    closeProductModal
-);
+/* =========================================================
+   PRICE
+========================================================= */
+
+function formatPrice(product) {
+
+    if (
+        product.price === null ||
+        product.price === undefined ||
+        Number(product.price) <= 0
+    ) {
+
+        return "Price unavailable";
+    }
 
 
-modalOverlay.addEventListener(
-    "click",
-    closeProductModal
-);
+    const price =
+        Number(product.price);
 
 
-// =========================================================
-// RECOMMENDATIONS
-// =========================================================
+    if (
+        product.amazon_url ||
+        String(product.product_id || "")
+            .startsWith("B")
+    ) {
+
+        return `$${price.toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        )}`;
+    }
+
+
+    return `₹${price.toLocaleString(
+        "en-IN",
+        {
+            maximumFractionDigits: 2
+        }
+    )}`;
+}
+
+
+/* =========================================================
+   RECOMMENDATIONS
+========================================================= */
 
 async function getRecommendations() {
 
@@ -644,7 +938,7 @@ async function getRecommendations() {
 
 
     recommendationStatus.textContent =
-        "✦ Creating personalized recommendations...";
+        "Finding products for you...";
 
 
     recommendationsContainer.innerHTML = `
@@ -653,7 +947,7 @@ async function getRecommendations() {
 
             <div class="spinner"></div>
 
-            Finding products for you...
+            Creating personalized recommendations...
 
         </div>
     `;
@@ -685,6 +979,31 @@ async function getRecommendations() {
             data.recommendations || [];
 
 
+        if (!products.length) {
+
+            recommendationsContainer.innerHTML = `
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ♡
+                    </div>
+
+                    <h3>
+                        No recommendations found
+                    </h3>
+
+                    <p>
+                        Try another User ID.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
         recommendationsContainer.innerHTML =
             products
                 .map(
@@ -698,10 +1017,7 @@ async function getRecommendations() {
 
 
         recommendationStatus.textContent =
-            products.length
-                ? `${products.length} recommendations found for ${userId}`
-                : `No recommendations found for ${userId}`;
-
+            `${products.length} products recommended for ${userId}`;
 
     } catch (error) {
 
@@ -724,7 +1040,9 @@ async function getRecommendations() {
                 <br><br>
 
                 <small>
-                    ${escapeHtml(error.message)}
+                    ${escapeHtml(
+                        error.message
+                    )}
                 </small>
 
             </div>
@@ -733,105 +1051,25 @@ async function getRecommendations() {
 }
 
 
-// =========================================================
-// RECOMMENDATION CARD
-// =========================================================
+/* =========================================================
+   RECOMMENDATION CARD
+========================================================= */
 
 function createRecommendationCard(
     product,
     index
 ) {
 
-    const category =
-        product.category ||
-        "Product";
-
-
-    const price =
-        product.price !== null &&
-        product.price !== undefined
-            ? `₹${Number(
-                product.price
-            ).toLocaleString("en-IN")}`
-            : "Price unavailable";
-
-
-    const rating =
-        product.rating !== null &&
-        product.rating !== undefined
-            ? `⭐ ${Number(
-                product.rating
-            ).toFixed(1)}`
-            : "No rating";
-
-
-    return `
-
-        <article class="product-card">
-
-            <div class="product-visual">
-
-                <div class="product-emoji">
-                    ${getProductEmoji(category)}
-                </div>
-
-            </div>
-
-
-            <div class="product-info">
-
-                <div class="product-category">
-                    ${escapeHtml(category)}
-                </div>
-
-
-                <div class="product-name">
-
-                    ${escapeHtml(
-                        product.product_name ||
-                        "Unnamed Product"
-                    )}
-
-                </div>
-
-
-                <div class="product-brand">
-
-                    ${escapeHtml(
-                        product.brand ||
-                        "Unknown Brand"
-                    )}
-
-                </div>
-
-
-                <div class="product-bottom">
-
-                    <span class="product-price">
-                        ${price}
-                    </span>
-
-                    <span class="product-rating">
-                        ${rating}
-                    </span>
-
-                </div>
-
-
-                <span class="match-badge">
-                    ♡ Recommended for you
-                </span>
-
-            </div>
-
-        </article>
-    `;
+    return createProductCard(
+        product,
+        index
+    );
 }
 
 
-// =========================================================
-// SUGGESTIONS
-// =========================================================
+/* =========================================================
+   SUGGESTIONS
+========================================================= */
 
 document
     .querySelectorAll(".suggestion")
@@ -847,26 +1085,15 @@ document
                 searchInput.value =
                     query;
 
-                searchProducts(
-                    query
-                );
-
-                window.scrollTo({
-                    top:
-                        document.getElementById(
-                            "results"
-                        ).offsetTop - 120,
-
-                    behavior: "smooth"
-                });
+                searchProducts(query);
             }
         );
     });
 
 
-// =========================================================
-// CATEGORY BUTTONS
-// =========================================================
+/* =========================================================
+   CATEGORIES
+========================================================= */
 
 document
     .querySelectorAll(".category-card")
@@ -882,47 +1109,32 @@ document
                 searchInput.value =
                     query;
 
-                searchProducts(
-                    query
-                );
-
-                window.scrollTo({
-                    top:
-                        document.getElementById(
-                            "results"
-                        ).offsetTop - 120,
-
-                    behavior: "smooth"
-                });
+                searchProducts(query);
             }
         );
     });
 
 
-// =========================================================
-// SEARCH BUTTON
-// =========================================================
+/* =========================================================
+   SEARCH BUTTON
+========================================================= */
 
 searchButton.addEventListener(
     "click",
-    () => {
-
+    () =>
         searchProducts(
             searchInput.value
-        );
-    }
+        )
 );
 
-
-// =========================================================
-// ENTER SEARCH
-// =========================================================
 
 searchInput.addEventListener(
     "keydown",
     event => {
 
         if (event.key === "Enter") {
+
+            event.preventDefault();
 
             searchProducts(
                 searchInput.value
@@ -932,9 +1144,9 @@ searchInput.addEventListener(
 );
 
 
-// =========================================================
-// RECOMMENDATION BUTTON
-// =========================================================
+/* =========================================================
+   RECOMMENDATION
+========================================================= */
 
 recommendationButton.addEventListener(
     "click",
@@ -942,15 +1154,13 @@ recommendationButton.addEventListener(
 );
 
 
-// =========================================================
-// ENTER USER ID
-// =========================================================
-
 userIdInput.addEventListener(
     "keydown",
     event => {
 
         if (event.key === "Enter") {
+
+            event.preventDefault();
 
             getRecommendations();
         }
@@ -958,50 +1168,53 @@ userIdInput.addEventListener(
 );
 
 
-// =========================================================
-// SORT
-// =========================================================
+/* =========================================================
+   SORT
+========================================================= */
 
 sortSelect.addEventListener(
     "change",
     () => {
 
-        let sorted = [
-            ...currentResults
-        ];
+        const sorted =
+            [...currentResults];
 
 
-        const value =
-            sortSelect.value;
+        switch (
+            sortSelect.value
+        ) {
+
+            case "rating":
+
+                sorted.sort(
+                    (a, b) =>
+                        (b.rating || 0) -
+                        (a.rating || 0)
+                );
+
+                break;
 
 
-        if (value === "rating") {
+            case "price-low":
 
-            sorted.sort(
-                (a, b) =>
-                    (b.rating || 0) -
-                    (a.rating || 0)
-            );
-        }
+                sorted.sort(
+                    (a, b) =>
+                        (a.price || 0) -
+                        (b.price || 0)
+                );
 
-
-        if (value === "price-low") {
-
-            sorted.sort(
-                (a, b) =>
-                    (a.price || 0) -
-                    (b.price || 0)
-            );
-        }
+                break;
 
 
-        if (value === "price-high") {
+            case "price-high":
 
-            sorted.sort(
-                (a, b) =>
-                    (b.price || 0) -
-                    (a.price || 0)
-            );
+                sorted.sort(
+                    (a, b) =>
+                        (b.price || 0) -
+                        (a.price || 0)
+                );
+
+                break;
         }
 
 
@@ -1012,9 +1225,9 @@ sortSelect.addEventListener(
 );
 
 
-// =========================================================
-// FILTERS
-// =========================================================
+/* =========================================================
+   FILTER
+========================================================= */
 
 document
     .querySelectorAll(".filter")
@@ -1025,10 +1238,12 @@ document
             () => {
 
                 document
-                    .querySelectorAll(".filter")
+                    .querySelectorAll(
+                        ".filter"
+                    )
                     .forEach(
-                        f =>
-                            f.classList.remove(
+                        item =>
+                            item.classList.remove(
                                 "active"
                             )
                     );
@@ -1053,16 +1268,17 @@ document
                 }
 
 
-                let filtered = [];
+                let filtered =
+                    [...currentResults];
 
 
                 if (type === "budget") {
 
                     filtered =
-                        currentResults.filter(
-                            p =>
+                        filtered.filter(
+                            product =>
                                 Number(
-                                    p.price
+                                    product.price
                                 ) <= 5000
                         );
                 }
@@ -1071,10 +1287,10 @@ document
                 if (type === "rating") {
 
                     filtered =
-                        currentResults.filter(
-                            p =>
+                        filtered.filter(
+                            product =>
                                 Number(
-                                    p.rating
+                                    product.rating
                                 ) >= 4
                         );
                 }
@@ -1088,111 +1304,129 @@ document
     });
 
 
-// =========================================================
-// EMOJI HELPER
-// =========================================================
+/* =========================================================
+   MODAL CLOSE
+========================================================= */
 
-function getProductEmoji(
-    category
-) {
+function closeProductModal() {
+
+    productModal.classList.add(
+        "hidden"
+    );
+}
+
+
+closeModal.addEventListener(
+    "click",
+    closeProductModal
+);
+
+
+modalOverlay.addEventListener(
+    "click",
+    closeProductModal
+);
+
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            !productModal.classList.contains(
+                "hidden"
+            )
+        ) {
+
+            closeProductModal();
+        }
+    }
+);
+
+
+/* =========================================================
+   EMOJI
+========================================================= */
+
+function getProductEmoji(category) {
 
     const value =
-        category.toLowerCase();
+        String(category || "")
+            .toLowerCase();
 
 
     if (
         value.includes("laptop") ||
         value.includes("computer")
-    ) {
+    )
         return "💻";
-    }
 
 
     if (
         value.includes("phone") ||
         value.includes("mobile")
-    ) {
+    )
         return "📱";
-    }
 
 
     if (
         value.includes("headphone") ||
-        value.includes("audio")
-    ) {
+        value.includes("audio") ||
+        value.includes("earbud")
+    )
         return "🎧";
-    }
 
 
     if (
         value.includes("shoe") ||
         value.includes("footwear")
-    ) {
+    )
         return "👟";
-    }
 
 
-    if (
-        value.includes("watch")
-    ) {
+    if (value.includes("watch"))
         return "⌚";
-    }
 
 
-    if (
-        value.includes("camera")
-    ) {
+    if (value.includes("camera"))
         return "📷";
-    }
-
-
-    if (
-        value.includes("book")
-    ) {
-        return "📚";
-    }
-
-
-    if (
-        value.includes("fashion") ||
-        value.includes("clothing")
-    ) {
-        return "👕";
-    }
 
 
     return "🛍️";
 }
 
 
-// =========================================================
-// SECURITY
-// =========================================================
+/* =========================================================
+   ESCAPE
+========================================================= */
 
 function escapeHtml(value) {
 
-    return String(value)
+    if (
+        value === null ||
+        value === undefined
+    )
+        return "";
 
+
+    return String(value)
         .replace(
             /&/g,
             "&amp;"
         )
-
         .replace(
             /</g,
             "&lt;"
         )
-
         .replace(
             />/g,
             "&gt;"
         )
-
         .replace(
             /"/g,
             "&quot;"
         )
-
         .replace(
             /'/g,
             "&#039;"
@@ -1200,15 +1434,12 @@ function escapeHtml(value) {
 }
 
 
-// =========================================================
-// STARTUP
-// =========================================================
+function escapeAttribute(value) {
+
+    return escapeHtml(value);
+}
+
 
 console.log(
-    "✦ AI Shop frontend loaded"
-);
-
-console.log(
-    "Backend:",
-    API_URL
+    "✦ AI Shop — Premium frontend loaded"
 );
