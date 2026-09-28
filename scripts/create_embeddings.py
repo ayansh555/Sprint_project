@@ -11,16 +11,10 @@ from sentence_transformers import SentenceTransformer
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ORIGINAL_DATA_FILE = (
+PRODUCTS_FILE = (
     BASE_DIR
     / "data"
-    / "products_cleaned.csv"
-)
-
-REAL_PRODUCTS_FILE = (
-    BASE_DIR
-    / "data"
-    / "amazon_products_converted.csv"
+    / "real_products_10000.csv"
 )
 
 OUTPUT_DIR = (
@@ -41,40 +35,21 @@ MODEL_NAME = "all-MiniLM-L6-v2"
 
 
 # ============================================================
-# LOAD ORIGINAL PRODUCTS
+# LOAD NEW 10K PRODUCT DATASET
 # ============================================================
 
 print()
 print("=" * 60)
-print("LOADING ORIGINAL PRODUCTS")
+print("LOADING 10K PRODUCT DATASET")
 print("=" * 60)
 
-original_df = pd.read_csv(
-    ORIGINAL_DATA_FILE,
+df = pd.read_csv(
+    PRODUCTS_FILE,
     keep_default_na=False
 )
 
 print(
-    f"Original products: {len(original_df)}"
-)
-
-
-# ============================================================
-# LOAD REAL AMAZON PRODUCTS
-# ============================================================
-
-print()
-print("=" * 60)
-print("LOADING REAL AMAZON PRODUCTS")
-print("=" * 60)
-
-real_df = pd.read_csv(
-    REAL_PRODUCTS_FILE,
-    keep_default_na=False
-)
-
-print(
-    f"Real Amazon products: {len(real_df)}"
+    f"Products loaded: {len(df)}"
 )
 
 
@@ -89,43 +64,19 @@ required_columns = [
 
 for column in required_columns:
 
-    if column not in original_df.columns:
-        raise ValueError(
-            f"Missing column '{column}' "
-            f"in products_cleaned.csv"
-        )
+    if column not in df.columns:
 
-    if column not in real_df.columns:
         raise ValueError(
-            f"Missing column '{column}' "
-            f"in amazon_products_converted.csv"
+            f"Missing required column: {column}"
         )
 
 
 # ============================================================
-# COMBINE DATASETS
-# ============================================================
-
-print()
-print("=" * 60)
-print("COMBINING PRODUCTS")
-print("=" * 60)
-
-combined_df = pd.concat(
-    [
-        original_df,
-        real_df
-    ],
-    ignore_index=True
-)
-
-
-# ============================================================
-# CHECK DUPLICATE PRODUCT IDs
+# REMOVE DUPLICATE PRODUCT IDs
 # ============================================================
 
 duplicate_count = (
-    combined_df["Product_ID"]
+    df["Product_ID"]
     .astype(str)
     .duplicated()
     .sum()
@@ -134,12 +85,11 @@ duplicate_count = (
 if duplicate_count > 0:
 
     print(
-        f"WARNING: {duplicate_count} duplicate "
-        f"Product_ID values found."
+        f"Removing {duplicate_count} duplicate Product_IDs..."
     )
 
-    combined_df = (
-        combined_df
+    df = (
+        df
         .drop_duplicates(
             subset=["Product_ID"],
             keep="first"
@@ -149,8 +99,7 @@ if duplicate_count > 0:
 
 
 print(
-    f"Total products for embeddings: "
-    f"{len(combined_df)}"
+    f"Products for embeddings: {len(df)}"
 )
 
 
@@ -159,7 +108,7 @@ print(
 # ============================================================
 
 texts = (
-    combined_df["Search_Text"]
+    df["Search_Text"]
     .fillna("")
     .astype(str)
     .tolist()
@@ -215,8 +164,13 @@ embeddings = np.asarray(
 # SAVE EMBEDDINGS
 # ============================================================
 
+embedding_file = (
+    OUTPUT_DIR
+    / "product_embeddings.npy"
+)
+
 np.save(
-    OUTPUT_DIR / "product_embeddings.npy",
+    embedding_file,
     embeddings
 )
 
@@ -226,13 +180,18 @@ np.save(
 # ============================================================
 
 product_ids = (
-    combined_df["Product_ID"]
+    df["Product_ID"]
     .astype(str)
     .to_numpy()
 )
 
+product_ids_file = (
+    OUTPUT_DIR
+    / "product_ids.npy"
+)
+
 np.save(
-    OUTPUT_DIR / "product_ids.npy",
+    product_ids_file,
     product_ids
 )
 
@@ -248,7 +207,7 @@ print("=" * 60)
 
 print(
     "Total products:",
-    len(combined_df)
+    len(df)
 )
 
 print(
@@ -262,22 +221,12 @@ print(
 )
 
 print()
-print(
-    "Embeddings saved to:"
-)
-
-print(
-    OUTPUT_DIR / "product_embeddings.npy"
-)
+print("Embeddings saved to:")
+print(embedding_file)
 
 print()
-print(
-    "Product IDs saved to:"
-)
-
-print(
-    OUTPUT_DIR / "product_ids.npy"
-)
+print("Product IDs saved to:")
+print(product_ids_file)
 
 print()
 print("=" * 60)

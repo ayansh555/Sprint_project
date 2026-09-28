@@ -16,6 +16,7 @@
 
 <body>
 
+
 <!-- =====================================================
      NAVBAR
 ===================================================== -->
@@ -61,6 +62,54 @@
 
         </div>
 
+
+        <!-- AUTH BUTTONS -->
+
+        <div class="nav-actions">
+
+            <button
+                id="loginButton"
+                class="auth-button login-button"
+                type="button"
+            >
+                Login
+            </button>
+
+
+            <button
+                id="registerButton"
+                class="auth-button register-button"
+                type="button"
+            >
+                Register
+            </button>
+
+
+            <!-- LOGGED-IN USER -->
+
+            <div
+                id="userMenu"
+                class="user-menu hidden"
+            >
+
+                <span
+                    id="loggedInUsername"
+                    class="logged-in-username"
+                ></span>
+
+
+                <button
+                    id="logoutButton"
+                    class="auth-button logout-button"
+                    type="button"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
 
 </header>
@@ -73,7 +122,10 @@
 
 <main>
 
-<section class="hero" id="discover">
+<section
+    class="hero"
+    id="discover"
+>
 
     <div class="hero-content">
 
@@ -105,6 +157,7 @@
                 ⌕
             </div>
 
+
             <input
                 type="text"
                 id="searchInput"
@@ -112,9 +165,11 @@
                 autocomplete="off"
             >
 
+
             <button
                 id="searchButton"
                 class="search-button"
+                type="button"
             >
                 Search
                 <span>→</span>
@@ -127,32 +182,42 @@
 
         <div class="suggestions">
 
-            <span>Try searching:</span>
+            <span>
+                Try searching:
+            </span>
+
 
             <button
                 class="suggestion"
                 data-query="wireless headphones under ₹5000"
+                type="button"
             >
                 Wireless headphones
             </button>
 
+
             <button
                 class="suggestion"
                 data-query="gaming laptop"
+                type="button"
             >
                 Gaming laptop
             </button>
 
+
             <button
                 class="suggestion"
                 data-query="smart watch"
+                type="button"
             >
                 Smart watch
             </button>
 
+
             <button
                 class="suggestion"
                 data-query="comfortable running shoes"
+                type="button"
             >
                 Running shoes
             </button>
@@ -188,8 +253,11 @@
     >
 
         <div class="ai-label">
+
             <span>✦</span>
+
             AI UNDERSTOOD YOUR SEARCH
+
         </div>
 
 
@@ -199,11 +267,13 @@
                 ✦
             </div>
 
+
             <div class="ai-content">
 
                 <h3>
                     Here's what we're looking for
                 </h3>
+
 
                 <p id="interpretation">
                 </p>
@@ -231,9 +301,11 @@
                 EXPLORE
             </div>
 
+
             <h2>
                 Shop by category
             </h2>
+
 
             <p>
                 Start with what you're looking for.
@@ -245,19 +317,31 @@
         <div class="category-grid">
 
 
+            <!-- COMPUTER -->
+
             <button
                 class="category-card"
                 data-query="laptops and computers"
+                type="button"
             >
 
                 <span class="category-icon">
                     💻
                 </span>
 
+
                 <span>
-                    <strong>Computers</strong>
-                    <small>Laptops & accessories</small>
+
+                    <strong>
+                        Computers
+                    </strong>
+
+                    <small>
+                        Laptops & accessories
+                    </small>
+
                 </span>
+
 
                 <span class="category-arrow">
                     →
@@ -266,19 +350,32 @@
             </button>
 
 
+
+            <!-- AUDIO -->
+
             <button
                 class="category-card"
                 data-query="wireless headphones and earbuds"
+                type="button"
             >
 
                 <span class="category-icon">
                     🎧
                 </span>
 
+
                 <span>
-                    <strong>Audio</strong>
-                    <small>Headphones & earbuds</small>
+
+                    <strong>
+                        Audio
+                    </strong>
+
+                    <small>
+                        Headphones & earbuds
+                    </small>
+
                 </span>
+
 
                 <span class="category-arrow">
                     →
@@ -287,19 +384,32 @@
             </button>
 
 
+
+            <!-- MOBILE -->
+
             <button
                 class="category-card"
                 data-query="smartphones and mobile phones"
+                type="button"
             >
 
                 <span class="category-icon">
                     📱
                 </span>
 
+
                 <span>
-                    <strong>Mobiles</strong>
-                    <small>Phones & accessories</small>
+
+                    <strong>
+                        Mobiles
+                    </strong>
+
+                    <small>
+                        Phones & accessories
+                    </small>
+
                 </span>
+
 
                 <span class="category-arrow">
                     →
@@ -308,19 +418,32 @@
             </button>
 
 
+
+            <!-- WEARABLES -->
+
             <button
                 class="category-card"
                 data-query="smart watches"
+                type="button"
             >
 
                 <span class="category-icon">
                     ⌚
                 </span>
 
+
                 <span>
-                    <strong>Wearables</strong>
-                    <small>Smart watches & more</small>
+
+                    <strong>
+                        Wearables
+                    </strong>
+
+                    <small>
+                        Smart watches & more
+                    </small>
+
                 </span>
+
 
                 <span class="category-arrow">
                     →
@@ -351,9 +474,11 @@
                     DISCOVERY
                 </div>
 
+
                 <h2>
                     Products for you
                 </h2>
+
 
                 <span
                     id="resultCount"
@@ -365,23 +490,29 @@
 
             <div class="result-controls">
 
+
                 <button
                     class="filter active"
                     data-filter="all"
+                    type="button"
                 >
                     All
                 </button>
 
+
                 <button
                     class="filter"
                     data-filter="budget"
+                    type="button"
                 >
                     Under ₹5K
                 </button>
 
+
                 <button
                     class="filter"
                     data-filter="rating"
+                    type="button"
                 >
                     4★ & above
                 </button>
@@ -423,9 +554,11 @@
                     ✦
                 </div>
 
+
                 <h3>
                     What are you looking for?
                 </h3>
+
 
                 <p>
                     Search naturally and let AI find
@@ -457,9 +590,11 @@
                     PERSONALIZED
                 </div>
 
+
                 <h2>
                     Picked for you
                 </h2>
+
 
                 <p>
                     Recommendations based on your
@@ -467,6 +602,7 @@
                 </p>
 
             </div>
+
 
             <div class="recommendation-symbol">
                 ♡
@@ -479,7 +615,10 @@
 
             <div class="user-field">
 
-                <span>👤</span>
+                <span>
+                    👤
+                </span>
+
 
                 <input
                     type="text"
@@ -493,6 +632,7 @@
             <button
                 id="recommendationButton"
                 class="recommend-button"
+                type="button"
             >
                 Get recommendations
                 →
@@ -528,15 +668,19 @@
                 BEHIND THE EXPERIENCE
             </div>
 
+
             <h2>
                 Search powered by intelligence.
             </h2>
 
+
             <p>
+
                 The platform combines semantic embeddings,
                 vector search, AI query understanding and
                 behavioral recommendations to make product
                 discovery more relevant.
+
             </p>
 
         </div>
@@ -544,57 +688,89 @@
 
         <div class="technology-list">
 
+
             <div class="technology-item">
 
-                <span>01</span>
+                <span>
+                    01
+                </span>
 
                 <div>
-                    <strong>Gemini AI</strong>
+
+                    <strong>
+                        Gemini AI
+                    </strong>
+
                     <small>
                         Understands natural-language intent
                     </small>
+
                 </div>
 
             </div>
 
 
+
             <div class="technology-item">
 
-                <span>02</span>
+                <span>
+                    02
+                </span>
 
                 <div>
-                    <strong>Semantic Search</strong>
+
+                    <strong>
+                        Semantic Search
+                    </strong>
+
                     <small>
                         Finds products by meaning, not keywords
                     </small>
+
                 </div>
 
             </div>
 
 
+
             <div class="technology-item">
 
-                <span>03</span>
+                <span>
+                    03
+                </span>
 
                 <div>
-                    <strong>FAISS</strong>
+
+                    <strong>
+                        FAISS
+                    </strong>
+
                     <small>
                         Fast vector similarity retrieval
                     </small>
+
                 </div>
 
             </div>
 
 
+
             <div class="technology-item">
 
-                <span>04</span>
+                <span>
+                    04
+                </span>
 
                 <div>
-                    <strong>Personalization</strong>
+
+                    <strong>
+                        Personalization
+                    </strong>
+
                     <small>
                         Recommendations from user interactions
                     </small>
+
                 </div>
 
             </div>
@@ -606,6 +782,235 @@
 </div>
 
 </main>
+
+
+
+<!-- =====================================================
+     AUTH MODAL
+===================================================== -->
+
+<div
+    id="authModal"
+    class="modal hidden"
+>
+
+    <div
+        id="authModalOverlay"
+        class="modal-overlay"
+    ></div>
+
+
+    <div class="modal-content auth-modal-content">
+
+
+        <!-- CLOSE -->
+
+        <button
+            id="closeAuthModal"
+            class="close-modal"
+            type="button"
+        >
+            ×
+        </button>
+
+
+        <!-- =================================================
+             LOGIN FORM
+        ================================================== -->
+
+        <div
+            id="loginFormContainer"
+            class="auth-form-container"
+        >
+
+            <div class="auth-header">
+
+                <div class="auth-icon">
+                    ✦
+                </div>
+
+
+                <h2>
+                    Welcome back
+                </h2>
+
+
+                <p>
+                    Login to your AI Shop account.
+                </p>
+
+            </div>
+
+
+            <form id="loginForm">
+
+                <label for="loginEmail">
+                    Email
+                </label>
+
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+
+                <label for="loginPassword">
+                    Password
+                </label>
+
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="auth-submit-button"
+                >
+                    Login
+                </button>
+
+
+                <p
+                    id="loginStatus"
+                    class="auth-status"
+                ></p>
+
+            </form>
+
+
+            <p class="auth-switch">
+
+                Don't have an account?
+
+                <button
+                    id="showRegisterButton"
+                    type="button"
+                >
+                    Register
+                </button>
+
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             REGISTER FORM
+        ================================================== -->
+
+        <div
+            id="registerFormContainer"
+            class="auth-form-container hidden"
+        >
+
+            <div class="auth-header">
+
+                <div class="auth-icon">
+                    ✦
+                </div>
+
+
+                <h2>
+                    Create account
+                </h2>
+
+
+                <p>
+                    Join AI Shop and discover smarter.
+                </p>
+
+            </div>
+
+
+            <form id="registerForm">
+
+                <label for="registerUsername">
+                    Username
+                </label>
+
+
+                <input
+                    type="text"
+                    id="registerUsername"
+                    placeholder="Choose a username"
+                    autocomplete="username"
+                    required
+                >
+
+
+                <label for="registerEmail">
+                    Email
+                </label>
+
+
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+
+                <label for="registerPassword">
+                    Password
+                </label>
+
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="auth-submit-button"
+                >
+                    Create Account
+                </button>
+
+
+                <p
+                    id="registerStatus"
+                    class="auth-status"
+                ></p>
+
+            </form>
+
+
+            <p class="auth-switch">
+
+                Already have an account?
+
+                <button
+                    id="showLoginButton"
+                    type="button"
+                >
+                    Login
+                </button>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 
@@ -658,6 +1063,7 @@
                 ✦ AI SHOP
             </div>
 
+
             <p>
                 Intelligent product discovery.
             </p>
@@ -672,6 +1078,7 @@
     </div>
 
 </footer>
+
 
 
 <script src="script.js"></script>

@@ -29,6 +29,7 @@ def hash_password(password: str) -> str:
     """
     Hash a plain-text password using bcrypt.
     """
+
     return pwd_context.hash(password)
 
 
@@ -37,8 +38,10 @@ def verify_password(
     hashed_password: str
 ) -> bool:
     """
-    Verify a plain-text password against its bcrypt hash.
+    Verify a plain-text password against
+    its stored bcrypt hash.
     """
+
     return pwd_context.verify(
         plain_password,
         hashed_password
@@ -46,7 +49,7 @@ def verify_password(
 
 
 # ============================================================
-# JWT TOKEN CREATION
+# CREATE JWT TOKEN
 # ============================================================
 
 def create_access_token(data: dict) -> str:
@@ -58,12 +61,16 @@ def create_access_token(data: dict) -> str:
 
     expire = (
         datetime.now(timezone.utc)
-        + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        + timedelta(
+            minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        )
     )
 
-    to_encode.update({
-        "exp": expire
-    })
+    to_encode.update(
+        {
+            "exp": expire
+        }
+    )
 
     encoded_jwt = jwt.encode(
         to_encode,
@@ -75,7 +82,7 @@ def create_access_token(data: dict) -> str:
 
 
 # ============================================================
-# JWT TOKEN DECODING
+# DECODE JWT TOKEN
 # ============================================================
 
 def decode_access_token(token: str):
@@ -83,8 +90,8 @@ def decode_access_token(token: str):
     Decode and validate a JWT token.
 
     Returns:
-        payload dictionary if valid
-        None if invalid/expired
+        Payload dictionary if valid.
+        None if invalid or expired.
     """
 
     try:

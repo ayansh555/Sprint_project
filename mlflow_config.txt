@@ -1,0 +1,8 @@
+AI E-Commerce Search & Recommendation System
+============================================
+Dataset: real_products_10000.csv
+Product Count: 10000
+Embedding Model: all-MiniLM-L6-v2
+Embedding Dimension: 384
+FAISS Index: IndexFlatIP
+Similarity: Inner Product / Cosine Similarity
